@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{ 
+            width: 60%;
+            border: 1px solid blue;
+            
+          
+            
+        }
+        div>div{
+            border: none;
+            width: auto;
+           
+
+        }
+        #otp>button{
+            display: flex;
+             background-color: teal;
+        width: 130px;
+        height: 30px;
+        color: white;
+        font-size: 17px;
+        margin-left: 30%;
+       
+        
+        }
+        span{
+           
+           
+        }
+        #mobile{
+            display: flex;
+        }
+        h2{
+            color: blue;
+            text-align: center;
+        }
+        p{
+            text-align: center;
+            align-content: center;
+        }
+    </style>
+</head>
+<body>
+  <div>
+        <h2>Get connected to varified sellers</h2>
+        <p>Click below to get 4 digit One Time Password (OTP)
+            on your Mobile Number <span id="mobile"></span>via SMS</p>
+        <div  id="otp">
+            <button>Generate Otp</button>
+        </div>
+  </div>
+</body>
+</html>
+<script>
+    document.querySelector("#otp").addEventListener("click",generateotp)
+   function generateotp(e){
+       e.preventDefault()
+        alert("otp"+" "+Math.floor(Math.random()*10000))
+        
+    }
+    var number = JSON.parse(localStorage.getItem("userdata"))[0]
+        console.log(number)
+        document.querySelector("#mobile").innerHTML=number
+</script>
