@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .priceDiv {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px;
+        
+      }
+      #container{
+          display: grid;
+          grid-template-columns: repeat(4,1fr);
+      }
+      #container>div{
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="window.location.href='totalcart.html'">go to cart</button>
+    <div id="container"></div>
+  </body>
+</html>
+<script src="./script/productData.js"></script>
+<script>
+  var productData = JSON.parse(localStorage.getItem("productData"));
+ // console.log(mensData);
+
+  var cartarr=JSON.parse(localStorage.getItem("cartitem")) || [];
+
+  displaydata(productData);
+
+  function displaydata(productData){
+
+    document.querySelector("#container").innerHTML= "";
+
+    productData.map(function (elem) {
+    var mainDiv = document.createElement("div");
+
+    var img = document.createElement("img");
+    img.setAttribute("src", elem.image_url);
+
+    var name = document.createElement("p");
+    name.innerText = elem.name;
+
+    var catagory = document.createElement("p");
+    catagory.innerText = elem.catagory;
+
+    var company = document.createElement("p");
+    company.innerText = elem.company;
+
+    var innerDiv = document.createElement("div");
+
+    var price = document.createElement("p");
+    price.innerText = elem.price;
+
+    var strikedoffprice = document.createElement("p");
+    strikedoffprice.innerText = elem.strikedoffprice;
+    strikedoffprice.style.textDecoration = "line-through";
+
+    innerDiv.append(price, strikedoffprice);
+    innerDiv.setAttribute("class", "priceDiv");
+
+    var cart = document.createElement("button");
+    cart.innerText = "Add to cart";
+    cart.addEventListener("click", function () {
+      addToCart(elem);
+    });
+
+    mainDiv.append(img, name, catagory, company,innerDiv, cart);
+
+    document.querySelector("#container").append(mainDiv);
+  });
+    
+    function addToCart(elem){
+      //console.log(elem);
+      elem.quant=1;
+      cartarr.push(elem);
+      console.log(cartarr);
+      localStorage.setItem("cartitem",JSON.stringify(cartarr));
+    }
+  }
+
+</script>
