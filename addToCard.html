@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+        }
+        img{
+            height: 300px;
+            width: 200px;
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Products and Services</h1>
+    <div id="container">
+        <!-- <h2>Make Up</h2> -->
+    </div>
+</body>
+</html>
+<script src="product.js"></script>
+<script>
+    var productData=JSON.parse(localStorage.getItem("productData"));
+    console.log(productData);
+    productData.map(function(elem){
+        var mainDiv=document.createElement("div");
+        var img=document.createElement("img");
+        img.setAttribute("src",elem.image_url);
+
+        var name=document.createElement("p");
+        name.innerText=elem.name;
+
+        var companyname=document.createElement("p");
+        companyname.innerText=elem.company;
+
+        var catagory=document.createElement("p");
+        catagory.innerText=elem.catagory;
+
+        var price=document.createElement("p");
+        price.innerText=elem.price;
+
+        var btn=document.createElement("button");
+        btn.textContent="Add To Cart";
+        btn.addEventListener("click",function(){
+            addToCart(elem);
+        })
+
+        mainDiv.append(img,name,companyname,catagory,price,btn);
+        document.querySelector("#container").append(mainDiv);
+    });
+</script>
