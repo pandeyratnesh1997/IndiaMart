@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <a href="http://127.0.0.1:5500/IndiaMart/header_&_mapping.html">
+            <img id="logo" src="https://lh3.googleusercontent.com/TMDito1vv__oTDEz2r3QlSAgIj0UvZiOC2MUCFmFxbLaRgngBMm3LG6m8d105R5OLd3utw=s85" />
+            indiamart
+        </a>
+        <div id="searchBar">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWPIW4zsVRjJhQNkaXkmya8tq2Af6Qvg1dTw&usqp=CAU/">
+            <select id="loc">
+                <option value="all india" >All India</option>
+                <option value="delhi">Delhi</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="kolkata">Kolkata</option>
+                <option value="bangalore">Bangalore</option>
+                <option value="indore">Indore</option>
+            </select>
+            <form id="form" style="display: flex;">
+                <input id="textsearch" type="text"  placeholder="Enter product / service to search" size="35">
+                <input type="submit" value="🔍Search" id="searchBtn"></input>
+            </form> 
+        </div>  
+        <div id="bestPrice"><a href="bestPrice.html" target="_blank" >Get Best Price</a></div>
+        <div id="header_icon">
+            
+                
+                <img src="https://thumbs.dreamstime.com/b/food-stall-line-icon-food-stall-line-icon-outline-vector-sign-linear-style-pictogram-isolated-white-symbol-logo-illustration-100240476.jpg"/>
+            
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE0VoSljx_VGXqeBGGynkUGicIVpskhMuTyCvSlqukfkA2gZrOQ07kWcij2k89leO9xqs&usqp=CAU"/>
+                <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1808/urfandadashov180818035/108102249-nachrichtenvektorsymbol-lokalisiert-auf-transparentem-hintergrund-nachrichtenlogo-konzept.jpg"/>
+                <img src="https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg"/>
+        </div>
+    </div>
+    <h1>Selected Items</h1>
+    <div id="container"></div>
+    <h1 id="total"> 0</h1>
+    
+</body>
+</html>
+<script>
+    var cartArr = JSON.parse(localStorage.getItem("cartItem")) ||[]
+    console.log(cartArr);
+     
+     function displayData(Items){
+        document.querySelector("#container").innerHTML="";
+       Items.map(function(elem,index){
+            var mainDiv = document.createElement("div");
+     
+            var img = document.createElement("img");
+            img.setAttribute("src",elem.image_url);
+     
+            var catagory = document.createElement("p");
+            catagory.innerText = elem.catagory;
+     
+            var name = document.createElement("p");
+            name.innerText = elem.name;
+     
+            var company = document.createElement("p");
+            company.innerText = elem.company;
+     
+            var price = document.createElement("p");
+            price.innerText= "Rs. " + elem.price + "-" + elem.quant;
+            var btn=document.createElement("button");
+            btn.innerText="Add+1";
+            btn.addEventListener("click",function(){
+                increaseQuant(index);
+            })
+            var btn2=document.createElement("button");
+            btn2.innerText="Minus-1";
+            btn2.addEventListener("click",function(){
+                decreaseQuant(index);
+            })
+
+
+            mainDiv.append(img,catagory,name,company,price,btn,btn2);
+       document.querySelector("#container").append(mainDiv);
+
+        });
+     }
+     function showTotal(){
+            var total=cartArr.reduce(function(acc,item){
+                return acc+ (item.price * item.quant);
+            },0);
+        document.getElementById("total").innerText=total;
+        }
+       
+        
+     displayData(cartArr);
+        
+        
+        showTotal();
+        function increaseQuant(index){
+            console.log(index)
+            cartArr[index].quant++;
+            localStorage.setItem("cartItem",JSON.stringify(cartArr));
+            displayData(cartArr);
+            showTotal();
+        }
+        function decreaseQuant(elem){
+            cartArr[elem].quant--;
+            localStorage.setItem("cartItem",JSON.stringify(cartArr));
+            // displayData(cartArr);
+            showTotal();
+        }
+       
+     
+</script>
